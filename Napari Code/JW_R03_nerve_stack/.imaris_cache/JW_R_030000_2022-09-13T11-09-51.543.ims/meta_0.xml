@@ -1,0 +1,64 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<MetaData>
+  <NumberOfImages>1</NumberOfImages>
+  <Image mIndex="0">
+    <BaseFileConverter>ImarisConvert</BaseFileConverter>
+    <BaseDescription>Bitplane: Imaris 5.5</BaseDescription>
+    <BaseDimension>1797 1267 3 3 1</BaseDimension>
+    <BaseFileExtension>ims</BaseFileExtension>
+    <BaseNumberOfDataSets>1</BaseNumberOfDataSets>
+    <BaseHasSettings>true</BaseHasSettings>
+    <BaseForcedVoxelSize>0.000 0.000 0.000</BaseForcedVoxelSize>
+    <ImplSeriesConfigurable>false</ImplSeriesConfigurable>
+    <ImplActiveDataSetIndex>0</ImplActiveDataSetIndex>
+    <ImplActiveResolutionLevel>0</ImplActiveResolutionLevel>
+    <ImplDataBlockNumberOfVoxels>524288</ImplDataBlockNumberOfVoxels>
+    <ImplDataBlockSizeV>256 64 32 1 1</ImplDataBlockSizeV>
+    <ImplDataSizeV>1797 1267 3 3 1</ImplDataSizeV>
+    <ImplDataType>UInt8</ImplDataType>
+    <ImplDimensionSequence>0 1 2 3 4</ImplDimensionSequence>
+    <ImplExtendMax>152146.000 107272.664 3.000</ImplExtendMax>
+    <ImplExtendMin>0.000 0.000 0.000</ImplExtendMin>
+    <ImplMergeImages>false</ImplMergeImages>
+    <ImplNumberOfDataBlocks>480</ImplNumberOfDataBlocks>
+    <ImplNumberOfDataSets>1</ImplNumberOfDataSets>
+    <ImplNumberOfResolutions>3</ImplNumberOfResolutions>
+    <ImplReaderDescription>Bitplane: Imaris 5.5</ImplReaderDescription>
+    <ImplReaderExtension>ims</ImplReaderExtension>
+    <ImplNaNCheckStatus>false</ImplNaNCheckStatus>
+    <ImplParameters><![CDATA[[Channel 0]
+Name = (name not specified)
+[Channel 1]
+Name = (name not specified)
+[Channel 2]
+Name = (name not specified)
+[Image]
+Description = (description not specified)
+ExtMax0 = 152146.000000000
+ExtMax1 = 107272.664062500
+ExtMax2 = 3.000000000
+ExtMin0 = 0.000000000
+ExtMin1 = 0.000000000
+ExtMin2 = 0.000000000
+Name = (name not specified)
+OriginalFormat = TIFF
+OriginalFormatFileIOVersion = ImarisFileIO x64 9.9.1
+RecordingDate = 2022-09-13 11:09:51
+ResampleDimensionX = true
+ResampleDimensionY = true
+ResampleDimensionZ = true
+Unit = um
+X = 1797
+Y = 1267
+Z = 3
+[ImarisDataSet]
+Creator = Imaris Convert Bioformats
+NumberOfImages = 1
+Version = 9.9.1
+[Log]
+Entries = 0
+]]>
+</ImplParameters>
+    <ImplSeriesFileValid>false</ImplSeriesFileValid>
+  </Image>
+</MetaData>
