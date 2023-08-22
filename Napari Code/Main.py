@@ -9,6 +9,12 @@ from PIL import Image
 import h5py
 import tifffile
 import imagecodecs
+#import napari-deeplabcut
+import deeplabcut
+from __future__ import print_function
+import cv2 as cv
+import numpy as np
+import argparse
 
 
 # The commented out section individual prints out all the images and you have to select each image to
@@ -53,11 +59,12 @@ for file in os.listdir(directory):
 napari.run()
 """
 directory = 'C:\\Users\\andrewss\\PycharmProjects\\pythonProject\\JW_R03_nerve_stack'
-viewer = napari.Viewer()
+viewer = napari.Viewer(ndisplay=3)
 counter = 0
 photo_arrays = list() * 153
 print(photo_arrays)
 
+print("Before for statement")
 for file in os.listdir(directory):
     print("---------------------------------------------------------------------------------------------")
     # Read filename
@@ -106,11 +113,15 @@ for file in os.listdir(directory):
         print("-----------------------------------------------------------------------------------------")
 print(type(photo_arrays))
 print(len(photo_arrays))
-print(photo_arrays)
+#print(photo_arrays)
 
 nparry = np.array(photo_arrays)
 
 print(nparry.shape)
+print(type(nparry))
+print(nparry.ndim)
+print(nparry)
 new_layer = viewer.add_image(nparry)
 new_layer.colormap = 'green'
+napari.view_image(data=nparry, ndisplay=3)
 napari.run()
