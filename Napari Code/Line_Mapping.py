@@ -58,4 +58,4 @@ if __name__ == "__main__":
     parser.add_argument('--input', help='Path to input image.', default='LinuxLogo.jpg')
     args = parser.parse_args()
 
-    main(args.input)
+    main()
