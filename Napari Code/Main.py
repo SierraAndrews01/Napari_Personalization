@@ -26,6 +26,7 @@ def create_photo_array(image_stack, viewer):
 
         # Split the name into the name and extension
         split_tup = os.path.splitext(filename)
+        print(split_tup)
 
         # Create file extension variable
         file_extension = split_tup[1]
@@ -58,60 +59,20 @@ def create_photo_array(image_stack, viewer):
 
             counter = counter + 1
     nparry = np.array(photo_arrays)
+    print("After nparry is created")
     new_layer = viewer.add_image(nparry)
     new_layer.colormap = 'green'
     napari.view_image(data=nparry, ndisplay=3)
     napari.run()
 
-def plot_lines(image):
-    # Convert image to grayscale
-    gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-
-    # Use canny edge detection
-    edges = cv.Canny(gray, 50, 150, apertureSize=3)
-
-    # Apply HoughLinesP method to
-    # directly obtain line end points
-    lines_list = []
-    lines = cv.HoughLinesP(
-        edges,  # Input edge image
-        0.5,  # Distance resolution in pixels
-        np.pi / 180,  # Angle resolution in radians
-        threshold=40,  # Min number of votes for valid line
-        minLineLength=5,  # Min allowed length of line
-        maxLineGap=25  # Max allowed gap between line for joining them
-    )
-
-    # Iterate over points
-    for points in lines:
-        # Extracted points nested in the list
-        x1, y1, x2, y2 = points[0]
-        # Draw the lines joing the points
-        # On the original image
-        cv.line(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        # Maintain a simples lookup list for points
-        lines_list.append([(x1, y1), (x2, y2)])
-
-    # Save the result image
-    cv.imshow('detectedLines.png', image)
-    #return lines
-
-def line_mapping(image):
-    kernel = cv.getStructuringElement(cv.MORPH_RECT, (3, 3))
-    if image is None:
-        print('Could not open or find the image: ', image)
-        exit(0)
-    opened_image = cv.morphologyEx(image, cv.MORPH_OPEN, kernel)
-    cv.imshow('Original Image', image)
-    cv.imshow('Opened Image', opened_image)
-    lines = plot_lines(opened_image)
-    cv.waitKey(0)
-    cv.destroyAllWindows()
-
 def main():
+    practice_image = 'C:\\Users\\andrewss\\PycharmProjects\\pythonProject\\JW_R03_nerve_stack\\JW_R_030000_2022-09-13T11-11-45.333.tif'
     directory = 'C:\\Users\\andrewss\\PycharmProjects\\pythonProject\\JW_R03_nerve_stack'
     viewer = napari.Viewer(ndisplay=3)
     numpy_array = create_photo_array(directory, viewer)
+    print("After numpy_array is created")
+    #line_mapping(practice_image)
+    print("After line mapping")
 
 
 if __name__ == "__main__":
