@@ -16,6 +16,7 @@ def main():
     working_directory = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\JW_R03_nerve_stack'
     filenames = os.listdir(working_directory)
     counter = 0
+    coordinate_list = list()
 
     for file in os.listdir(working_directory):
         if counter >= 32:
@@ -30,6 +31,7 @@ def main():
             # Erodes and dilates
             opened_image = cv.morphologyEx(src, cv.MORPH_OPEN, kernel)
             lines = plot_lines(analyzed_image_directory, opened_image, filenames[counter])
+            coordinate_list.append(lines)
             cv.waitKey(0)
             cv.destroyAllWindows()
         counter = counter + 1
@@ -49,6 +51,19 @@ def plot_lines(directory, image, image_name):
     # Use canny edge detection
     edges = cv.Canny(gray, 50, 150, apertureSize=3)
 
+    # apply binary thresholding
+    ret, thresh = cv.threshold(edges, 150, 255, cv.THRESH_BINARY)
+    # detect the contours on the binary image using cv2.CHAIN_APPROX_NONE
+    contours, hierarchy = cv.findContours(image=thresh, mode=cv.RETR_TREE, method=cv.CHAIN_APPROX_NONE)
+    # draw contours
+    image_copy = image.copy()
+    cv.drawContours(image=image_copy, contours=contours, contourIdx=-1, color=(0, 255, 0), thickness=2,
+                    lineType=cv.LINE_AA)
+
+    store_new_image(directory, image_name, image_copy)
+    return contours
+
+'''
     # Apply HoughLinesP method to
     # directly obtain line end points
     lines_list = []
@@ -56,7 +71,8 @@ def plot_lines(directory, image, image_name):
         edges,  # Input edge image
         0.5,  # Distance resolution in pixels
         np.pi / 180,  # Angle resolution in radians
-        threshold=40,  # Min number of votes for valid line
+        # 20 is probably a decent middle ground
+        threshold=10,  # Min number of votes for valid line
         minLineLength=5,  # Min allowed length of line
         maxLineGap=45  # Max allowed gap between line for joining them
     )
@@ -77,12 +93,13 @@ def plot_lines(directory, image, image_name):
             lines_list.append([(x1, y1), (x2, y2)])
 
         # Save the result image
-        #cv.imshow('detectedLines.png', image)
+        #cv.imshow(image_name, image)
 
         # Run save image method
         store_new_image(directory, image_name, image)
 
     return lines
+    '''
 
 
 def directory_set_up(path):
