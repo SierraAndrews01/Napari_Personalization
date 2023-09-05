@@ -35,15 +35,9 @@ def create_photo_array(image_stack, viewer):
 
         # If the extension is not a TIFF file it ignores it and prints/increments the counter
         # if file_extension != ".tif":
-        #   print("Fraud")
-        #   print(counter)
-        #    counter = counter + 1
         if counter <= 6:
             print(counter)
             counter = counter + 1
-        # If the file doesn't have an extension it ignores it and prints/increments the counter
-        # elif file_extension == "":
-        # counter = counter + 1
         # If it is a TIFF file it creates a path for it, reads the image, and converts
         # it to a numpy array that is then added to a list
         else:
