@@ -2,6 +2,7 @@ from __future__ import print_function
 import os
 from types import NoneType
 
+import napari
 import cv2 as cv
 import numpy as np
 import argparse
@@ -10,14 +11,16 @@ import tifffile
 from pathlib import Path
 
 def main():
+    print("Beginning of main method")
     # Create new folder or clear old folder
-    analyzed_image_directory = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\Mapped_Images\\'
-    directory_set_up(analyzed_image_directory)
-    working_directory = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\JW_R03_nerve_stack'
-    filenames = os.listdir(working_directory)
+    # analyzed_image_directory = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\Mapped_Images\\'
+    # directory_set_up(analyzed_image_directory)
+    # working_directory = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\JW_R03_nerve_stack'
+    # filenames = os.listdir(working_directory)
     counter = 0
     coordinate_list = list()
 
+    """
     for file in os.listdir(working_directory):
         if counter >= 32:
             full_image_path = working_directory + '\\' + filenames[counter]
@@ -39,14 +42,73 @@ def main():
         #lines = plot_lines(opened_image)
         #cv.waitKey(0)
         #cv.destroyAllWindows()
+        """
+    image_path_1 = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\JW_R03_nerve_stack\\JW_R_030022.tif'
+    image_path_2 = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\JW_R03_nerve_stack\\JW_R_030013.tif'
+    image_path_3 = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\JW_R03_nerve_stack\\JW_R_030035.tif'
+    image_path_4 = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\JW_R03_nerve_stack\\JW_R_030055.tif'
+    image_path_5 = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\JW_R03_nerve_stack\\JW_R_030063.tif'
+    image_path_6 = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\JW_R03_nerve_stack\\JW_R_030074.tif'
+    image_path_7 = 'C:\\Users\\andrewss\\PycharmProjects\\Napari_Personalization\\Napari Code\\JW_R03_nerve_stack\\JW_R_030098.tif'
+
+    image_testing(image_path_1, '1')
+    image_testing(image_path_2, '2')
+    image_testing(image_path_3, '3')
+    image_testing(image_path_4, '4')
+    image_testing(image_path_5, '5')
+    image_testing(image_path_6, '6')
+    image_testing(image_path_7, '7')
+
+    # color_img = cv.cvtColor(practice_image, cv.COLOR_GRAY2RGB)
+    # cv.imshow("2nd", color_img)
+    # cv.waitKey(0)
+
+    # practice_image_2 = tifffile.imread('JW_R_030022_1.tif')
+    # cv.imshow("3rd", practice_image_2)
+    # cv.waitKey(0)
+
+    #print("Before cv show")
+    #cv.imshow("Image_V1", image_v1)
+    #cv.waitKey(0)
+    #print("After cv show")
+
+    # viewer = napari.Viewer(ndisplay=3)
+    # new_layer = viewer.add_image(image_v1)
 #  [main]
 
+def image_testing(image_path, number_str):
+    practice_image = cv.imread(image_path, cv.IMREAD_COLOR)
+    cv.imshow(number_str, practice_image)
+
+    plot_lines(practice_image)
+
+def contrast_image_v1(image):
+    brightness = -20
+    # Adjusts the contrast by scaling the pixel values by 2.3
+    contrast = 0.5
+    image2 = cv.addWeighted(image, contrast, np.zeros(image.shape, image.dtype), 0, brightness)
+    # cv.imshow("add_weighted_function", image2)
+    #print("After showing first image type")
+    return image2
+
+def contrast_image_v2(image):
+    alpha = 1.5
+    beta = 10
+    image3 = cv.convertScaleAbs(image, alpha=alpha, beta=beta)
+    #cv.imshow("convertScaleAbs", image3)
+    #print("After showing second image type")
+    return image3
 
 # If we cant get napari points, we can save the copy of
 # the image with the lines over it and display that copy
-def plot_lines(directory, image, image_name):
+# OG parameters: def plot_lines(directory, image, image_name):
+def plot_lines(image):
+    print("Entered plot_lines")
     # Convert image to grayscale
-    gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
+    image_copy = contrast_image_v1(image)
+    cv.imshow("Image copy", image_copy)
+    cv.waitKey(0)
+    gray = cv.cvtColor(image_copy, cv.COLOR_BGR2GRAY)
 
     # Use canny edge detection
     edges = cv.Canny(gray, 50, 150, apertureSize=3)
@@ -56,12 +118,13 @@ def plot_lines(directory, image, image_name):
     # detect the contours on the binary image using cv2.CHAIN_APPROX_NONE
     contours, hierarchy = cv.findContours(image=thresh, mode=cv.RETR_TREE, method=cv.CHAIN_APPROX_NONE)
     # draw contours
-    image_copy = image.copy()
-    cv.drawContours(image=image_copy, contours=contours, contourIdx=-1, color=(0, 255, 0), thickness=2,
-                    lineType=cv.LINE_AA)
-
-    store_new_image(directory, image_name, image_copy)
-    return contours
+    cv.drawContours(image=image_copy, contours=contours, contourIdx=-1, color=(0, 255, 0), thickness=2, lineType=cv.LINE_AA)
+    cv.imshow("Final Practice Image", image_copy)
+    cv.waitKey(0)
+    #if(image_name == 'JW_R_030046.tif'):
+    #    cv.imshow('display image', image_copy_2)
+    #store_new_image(directory, image_name, image_copy)
+    #return contours
 
 '''
     # Apply HoughLinesP method to
